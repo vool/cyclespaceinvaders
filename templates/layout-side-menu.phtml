@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TODO">
+  <meta name="author" content="TODO">
+
+  <title><?=$v($title)?> | Cycle Space Invaders</title>
+
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+
+  <link rel="stylesheet" href="/css/style.css" >
+
+  <!-- Fontz -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap">
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
+
+  <style></style>
+</head>
+<body >
+  <div class="container-fluid">
+    <div class="row min-vh-100 flex-column flex-md-row">
+        <aside class="col-12 col-md-2 p-0 flex-shrink-1">
+            <?php $v->insert('includes::sidenav') ?>
+        </aside>
+        <main class="col bg-faded py-3 flex-grow-1">
+
+          <?php if (isset($hiscore)):?>
+          HI-SCCORE
+          <br>
+          <?=$v($hiscore);
+        endif;?>
+
+
+            <?=$v->section('content')?>
+            <?php $v->insert('includes::footer') ?>
+        </main>
+
+    </div>
+</div>
+
+  <!-- Core JavaScript libs -->
+  <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/pixelate.min.js"></script>
+  <script src="/node_modules/masonry-layout/dist/masonry.pkgd.min.js"></script>
+
+
+
+  <?=$v->section('scripts')?>
+
+  <script>
+
+  </script>
+
+</body>
+</html>
