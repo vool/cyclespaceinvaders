@@ -200,8 +200,7 @@ class ActionsController extends Controller
 
         try {
             $stmt->execute(
-                 ["id" => $id,
-                   'username' => $username,
+                 ['username' => $username,
                    'screenname' => $screen_name,
                    'location' => $location,
                    'description' => $description,
