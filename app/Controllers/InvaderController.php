@@ -149,7 +149,7 @@ class InvaderController extends Controller
 
 
         // Preassign data to the layout
-        $this->tpl->addData(['title' => ' ????', 'description' => '??.', 'layout']);
+        $this->tpl->addData(['title' => ' ????', 'description' => $total_records.' invaders captured for #'.$tag, 'layout']);
 
         // Render a template
         echo $this->tpl->render('invaders_tag', [ 'tweets' => $res, 'total' => $total_records, 'page' => $page, 'total_pages' => $total_pages, 'tag' => $tag]);

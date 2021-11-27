@@ -5,6 +5,7 @@ namespace CycleSpaceInvaders\Controllers;
 
 use Carbon\Carbon;
 use DG\Twitter\Twitter;
+use DG\Twitter\Exception;
 use CycleSpaceInvaders\Controllers\Controller;
 
 class ActionsController extends Controller
@@ -194,7 +195,7 @@ class ActionsController extends Controller
 
     private function addPlayer($id, $screen_name, $username, $avatar, $location, $description, $url, $created_at)
     {
-        $sql = "INSERT INTO `users` (`username`, `screenname`, `location`, `description`, `url`, `avatar`, `id`, `created_at`) VALUES (:username, :screenname, :location, :description, :url, :avatar, :id, :created_at)";
+        $sql = "INSERT INTO ".$_ENV['DB_USER_TABLE']." (`username`, `screenname`, `location`, `description`, `url`, `avatar`, `id`, `created_at`) VALUES (:username, :screenname, :location, :description, :url, :avatar, :id, :created_at)";
 
         $stmt = $this->dbconn->prepare($sql);
 
@@ -218,6 +219,84 @@ class ActionsController extends Controller
 
         return true;
     }
+
+    private function updatePlayer($id, $screen_name, $username, $avatar, $location, $description, $url)
+    {
+        $sql = "UPDATE ".$_ENV['DB_USER_TABLE']." SET username=:username, screenname=:screenname, location=:location, description=:description, url=:url, avatar=:avatar WHERE id=:id";
+
+
+        $stmt = $this->dbconn->prepare($sql);
+
+        try {
+            $stmt->execute(
+                 ['id' => $id,
+                   'username' => $username,
+                   'screenname' => $screen_name,
+                   'location' => $location,
+                   'description' => $description,
+                   'url' => $url,
+                   'avatar' => $avatar
+                 ]
+             );
+        } catch (Exception $e) {
+            echo "Error updating user : ".$e->getMessage();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function updatePlayers()
+    {
+        $this->logger->info("Doing update players");
+
+        echo "Doing update players";
+
+        $this->dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+
+        $sql = "SELECT * FROM ".$_ENV['DB_USER_TABLE'];
+
+        $stmt  = $this->dbconn->prepare($sql);
+
+        $stmt->execute();
+
+        $res = $stmt ->fetchAll();
+
+        foreach($res as $player){
+          echo "<hr>";
+          echo "Updating @".$player['username'] ." | ". $player['screenname']." | ". $player['id'];
+
+          //$player['id'] = 1210263422778118147;
+
+          try {
+
+              $user = $this->twitter->request('users/show', 'GET', ['user_id' => $player['id']]);
+
+              try {
+
+                $this->updateplayer($player['id'], $user->name, $user->screen_name, $user->profile_image_url, $user->location, $user->description, $user->url);
+
+                } catch (Exception $e) {
+                    echo "Error updating  player : ".$e->getMessage();
+
+                    return false;
+                }
+
+            } catch (Exception $e) {
+
+                echo "Error getting player info : ".$e->getMessage();
+
+                //return false;
+            }
+
+
+        }
+
+        //dd(count($res));
+
+            return true;
+      }
 
 
     private function addTweet($id, $user_id, $text, $media, $youtube, $hashtags, $coordinates, $place, $score, $created_at)

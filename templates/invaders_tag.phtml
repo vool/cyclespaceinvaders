@@ -3,7 +3,7 @@
 <div class="container invaders">
  <div class="row">
    <div class="col-lg-12 text-center">
-     <h2 class="mt-5 mb-4 yellow">*** <span class="blink"><?=$v($total)?></span> INVADERS in <?=$v($tag)?> *** </h2>
+     <h2 class="mt-5 mb-4 yellow">*** <span class="blink"><?=$v($total)?></span> INVADERS in #<?=$v($tag)?> *** </h2>
 
      <?php
      // setthe page no if not set, required for period routing in date finlter and pagination$page = $page ?: 1;?>
@@ -46,8 +46,8 @@
 
        <div class="col-12 text-center my-5">
          <?php
-         if ($total_pages >1) {
-             echo generatePageLinks($page, $total_pages, '/tag/'.$tag.'/');
+         if($total_pages >1){
+           echo generatePageLinks($page, $total_pages, '/tag/'.$tag.'/');
          }
           ?>
        </div>
