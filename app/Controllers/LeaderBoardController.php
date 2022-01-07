@@ -1,12 +1,11 @@
 <?php
-namespace CycleSpaceInvaders\Controllers;
 
-use CycleSpaceInvaders\Controllers\Controller;
+namespace CycleSpaceInvaders\Controllers;
 
 class LeaderBoardController extends Controller
 {
 
-  // Per Page
+    // Per Page
     private $ppage;
 
     private $limit;
@@ -28,25 +27,24 @@ class LeaderBoardController extends Controller
         // LIMIT 0 , 30";
 
 
-
         switch ($mode) {
-  case 'day':
-    $range  = 'WHERE created_at >= DATE_SUB(DATE(NOW()), INTERVAL 1 DAY) ';
-    break;
-    case 'week':
-      $range  = 'WHERE created_at >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) ';
-      break;
-      case 'month':
-        $range = 'WHERE created_at >= DATE_SUB(NOW(),INTERVAL 1 MONTH)';
-        break;
-        case 'year':
-          $range = 'WHERE created_at >= DATE_SUB(NOW(),INTERVAL 1 YEAR)';
-          break;
+            case 'day':
+                $range = 'WHERE created_at >= DATE_SUB(DATE(NOW()), INTERVAL 1 DAY) ';
+                break;
+            case 'week':
+                $range = 'WHERE created_at >= DATE_SUB(DATE(NOW()), INTERVAL 7 DAY) ';
+                break;
+            case 'month':
+                $range = 'WHERE created_at >= DATE_SUB(NOW(),INTERVAL 1 MONTH)';
+                break;
+            case 'year':
+                $range = 'WHERE created_at >= DATE_SUB(NOW(),INTERVAL 1 YEAR)';
+                break;
 
-  default:
-    $range ='';
-    break;
-}
+            default:
+                $range = '';
+                break;
+        }
 
 
 //
@@ -87,14 +85,13 @@ class LeaderBoardController extends Controller
         $stmt = $this->dbconn->prepare($sql);
         $stmt->execute();
 
-        $res = $stmt ->fetchAll();
+        $res = $stmt->fetchAll();
 
         $total = count($res);
 
         // Preassign data to the layout
-        $this->tpl->addData(['title' => 'Leader Board', 'description' => 'Game Leader board', 'layout']);
-        ;
+        $this->tpl->addData(['title' => 'Leader Board', 'description' => 'Game Leader board', 'layout']);;
         // Render a template
-        echo $this->tpl->render('leader-board', [ 'users' => $res, 'total' => $total, 'mode' => $mode]);
+        echo $this->tpl->render('leader-board', ['users' => $res, 'total' => $total, 'mode' => $mode]);
     }
 }

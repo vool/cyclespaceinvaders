@@ -10,9 +10,9 @@ $router->before('GET', '/.*', function () {
 
 $router->get('/', 'HomeController@home');
 
-  $router->get('/(\d+)', function ($page) use ($router) {
-      call_user_func_array([new CycleSpaceInvaders\Controllers\HomeController,'Home'], [$page]);
-  });
+$router->get('/(\d+)', function ($page) use ($router) {
+    call_user_func_array([new CycleSpaceInvaders\Controllers\HomeController, 'Home'], [$page]);
+});
 
 // Static route: /hello
 $router->get('/leader-board(/\w+)?', 'LeaderBoardController@allTime');//function () use ($tpl) {);
@@ -33,7 +33,7 @@ Players
 $router->get('/players(/\d+)?', 'PlayerController@index');
 
 $router->get('/player/(@\w+)(/\d+)?', function ($username, $page) {
-    call_user_func_array([new CycleSpaceInvaders\Controllers\PlayerController,'Show'], [$username, is_null($page) ? 1 : $page]);
+    call_user_func_array([new CycleSpaceInvaders\Controllers\PlayerController, 'Show'], [$username, is_null($page) ? 1 : $page]);
 });
 
 /*

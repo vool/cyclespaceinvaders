@@ -1,4 +1,5 @@
 <?php
+
 namespace CycleSpaceInvaders;
 
 ini_set('display_errors', 1);
@@ -15,8 +16,8 @@ defined('DS') ?: define('DS', DIRECTORY_SEPARATOR);
 //defined('ROOT') ?: define('ROOT', dirname(__DIR__.'/../') . DS);
 
 // Load .env file
-if (file_exists(__DIR__.DS.'..'.DS.'.env')) {
-    $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__.DS.'..');
+if (file_exists(__DIR__ . DS . '..' . DS . '.env')) {
+    $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . DS . '..');
     $dotenv->load();
 // $dotenv = new Dotenv\Dotenv(ROOT);
     // $dotenv->load();

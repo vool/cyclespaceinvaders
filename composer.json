@@ -1,9 +1,11 @@
 {
   "name": "keith/cyclespaceinvaders",
-  "authors": [{
-    "name": "Keith",
-    "email": "keith@vool.ie"
-  }],
+  "authors": [
+    {
+      "name": "Keith",
+      "email": "keith@vool.ie"
+    }
+  ],
   "require": {
     "bramus/router": "~1.4",
     "vlucas/phpdotenv": "^4.1",
@@ -21,8 +23,8 @@
     ]
   },
   "scripts": {
-        "post-install-cmd": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ]
-    }
+    "post-install-cmd": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ]
+  }
 }

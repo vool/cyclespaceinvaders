@@ -2,8 +2,6 @@
 
 namespace CycleSpaceInvaders\Controllers;
 
-use CycleSpaceInvaders\Controllers\Controller;
-
 class DbSetupController extends Controller
 {
     public function initDB()
@@ -21,7 +19,7 @@ class DbSetupController extends Controller
 
     private function setup_users_table()
     {
-        $sql = 'CREATE TABLE IF NOT EXISTS `'.$_ENV['DB_USER_TABLE'].'` (
+        $sql = 'CREATE TABLE IF NOT EXISTS `' . $_ENV['DB_USER_TABLE'] . '` (
   `username` varchar(255) NOT NULL,
   `screenname` varchar(255) NOT NULL,
   `location` varchar(255) DEFAULT NULL,
@@ -35,18 +33,18 @@ class DbSetupController extends Controller
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;';
 
-        $stmt  = $this->dbconn->prepare($sql);
+        $stmt = $this->dbconn->prepare($sql);
 
         if ($stmt->execute()) {
-            echo 'Table '.$_ENV['DB_USER_TABLE'].' creation success!</br>';
+            echo 'Table ' . $_ENV['DB_USER_TABLE'] . ' creation success!</br>';
         } else {
-            echo 'Table '.$_ENV['DB_USER_TABLE'].' creation fail!</br>';
+            echo 'Table ' . $_ENV['DB_USER_TABLE'] . ' creation fail!</br>';
         }
     }
 
     private function setup_tweets_table()
     {
-        $sql = 'CREATE TABLE IF NOT EXISTS `'.$_ENV['DB_TWEET_TABLE'].'` (
+        $sql = 'CREATE TABLE IF NOT EXISTS `' . $_ENV['DB_TWEET_TABLE'] . '` (
   `id` varchar(255) NOT NULL,
   `user_id` varchar(255) NOT NULL,
   `text` varchar(8000) DEFAULT NULL,
@@ -60,17 +58,35 @@ class DbSetupController extends Controller
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;';
 
-        $stmt  = $this->dbconn->prepare($sql);
+        $stmt = $this->dbconn->prepare($sql);
 
         if ($stmt->execute()) {
-            echo 'Table '.$_ENV['DB_TWEET_TABLE'].' creation success!</br>';
+            echo 'Table ' . $_ENV['DB_TWEET_TABLE'] . ' creation success!</br>';
         } else {
-            echo 'Table '.$_ENV['DB_TWEET_TABLE'].' creation fail!</br>';
+            echo 'Table ' . $_ENV['DB_TWEET_TABLE'] . ' creation fail!</br>';
         }
     }
 
+    private function setup_counties_table()
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS `counties` (
+  `countyID` int(11) NOT NULL AUTO_INCREMENT,
+  `countyName` varchar(10) NOT NULL,
+  `lat` float DEFAULT NULL,
+  `lng` float DEFAULT NULL,
+  `zoom` int(11) DEFAULT NULL,
+  `province` int(2) NOT NULL COMMENT "1=con 2=len 3=mun 4=uls",
+  PRIMARY KEY (`countyID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;';
 
+        $stmt = $this->dbconn->prepare($sql);
 
+        if ($stmt->execute()) {
+            echo 'Table counties creation success!</br>';
+        } else {
+            echo 'Table counties creation fail!</br>';
+        }
+    }
 
     private function setup_towns_table()
     {
@@ -81,7 +97,7 @@ class DbSetupController extends Controller
   PRIMARY KEY (`townID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;';
 
-        $stmt  = $this->dbconn->prepare($sql);
+        $stmt = $this->dbconn->prepare($sql);
 
         if ($stmt->execute()) {
             echo 'Table town creation success!</br>';
@@ -1479,35 +1495,13 @@ class DbSetupController extends Controller
 (1390, 13, "Inch"),
 (1392, 10, "Rathmines");';
 
-        $stmt  = $this->dbconn->prepare($sql);
+        $stmt = $this->dbconn->prepare($sql);
 
 
         if ($stmt->execute()) {
             echo 'Table town populate success!</br>';
         } else {
             echo 'Table town populate  fail!</br>';
-        }
-    }
-
-
-    private function setup_counties_table()
-    {
-        $sql = 'CREATE TABLE IF NOT EXISTS `counties` (
-  `countyID` int(11) NOT NULL AUTO_INCREMENT,
-  `countyName` varchar(10) NOT NULL,
-  `lat` float DEFAULT NULL,
-  `lng` float DEFAULT NULL,
-  `zoom` int(11) DEFAULT NULL,
-  `province` int(2) NOT NULL COMMENT "1=con 2=len 3=mun 4=uls",
-  PRIMARY KEY (`countyID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;';
-
-        $stmt  = $this->dbconn->prepare($sql);
-
-        if ($stmt->execute()) {
-            echo 'Table counties creation success!</br>';
-        } else {
-            echo 'Table counties creation fail!</br>';
         }
     }
 
@@ -1547,7 +1541,7 @@ class DbSetupController extends Controller
 (31, "Wexford", NULL, NULL, 8, 2),
 (32, "Wicklow", NULL, NULL, 8, 2);';
 
-        $stmt  = $this->dbconn->prepare($sql);
+        $stmt = $this->dbconn->prepare($sql);
 
         if ($stmt->execute()) {
             echo 'Table counties populate success!</br>';

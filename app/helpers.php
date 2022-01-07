@@ -22,7 +22,7 @@ function isPlayer($cxn, $id)
 
     $stmt->execute(["id" => $id]);
 
-    if (count($stmt ->fetchAll())) {
+    if (count($stmt->fetchAll())) {
         return true;
     } else {
         return false;
@@ -40,7 +40,7 @@ function isTweet($cxn, $id)
 
     $stmt->execute(["id" => $id]);
 
-    if (count($stmt ->fetchAll())) {
+    if (count($stmt->fetchAll())) {
         return true;
     } else {
         return false;
@@ -60,38 +60,37 @@ function isYoutubeVideo($url)
 }
 
 
-
 function generatePageLinks($pn, $total_pages, $base_url = '/')
 {
-    $pagLink =  '<ul class="pag list-inline">';
+    $pagLink = '<ul class="pag list-inline">';
     // K is assumed to be the middle index.
-    $k = (($pn+4>$total_pages)?$total_pages-4:(($pn-4<1)?5:$pn));
+    $k = (($pn + 4 > $total_pages) ? $total_pages - 4 : (($pn - 4 < 1) ? 5 : $pn));
 
     // Show prev and first-page links.
-    if ($pn>=2) {
-        $pagLink .="<li class='list-inline-item'><a href='".$base_url."1' class='dark-blue'> << </a></li>";
-        $pagLink .= "<li class='list-inline-item'><a href='".$base_url .($pn-1)."' class='light-blue'> < </a></li>";
+    if ($pn >= 2) {
+        $pagLink .= "<li class='list-inline-item'><a href='" . $base_url . "1' class='dark-blue'> << </a></li>";
+        $pagLink .= "<li class='list-inline-item'><a href='" . $base_url . ($pn - 1) . "' class='light-blue'> < </a></li>";
     }
 
     // Show sequential links.
-    for ($i=-4; $i<=4; $i++) {
-        if ($k+$i==$pn) {
+    for ($i = -4; $i <= 4; $i++) {
+        if ($k + $i == $pn) {
             $active = ' active';
         } else {
             $active = '';
         }
         // why hack ?
-        if ($k+$i > 0) {
+        if ($k + $i > 0) {
             //$pagLink .= "<li class='list-inline-item'><a href='".$base_url.($k+$i)."'>".($k+$i)."</a></li>";
-            $pagLink .= "<li class='list-inline-item".$active."'><a href='".$base_url.($k+$i)."'>".($k+$i)."</a></li>";
+            $pagLink .= "<li class='list-inline-item" . $active . "'><a href='" . $base_url . ($k + $i) . "'>" . ($k + $i) . "</a></li>";
         }
     };
 
 
     // Show next and last-page links.
-    if ($pn<$total_pages) {
-        $pagLink .= "<li class='list-inline-item'><a href='".$base_url.($pn+1)."' class='light-blue'> > </a></li>";
-        $pagLink .= "<li class='list-inline-item'><a href='".$base_url.$total_pages."' class='dark-blue'> >> </a></li>";
+    if ($pn < $total_pages) {
+        $pagLink .= "<li class='list-inline-item'><a href='" . $base_url . ($pn + 1) . "' class='light-blue'> > </a></li>";
+        $pagLink .= "<li class='list-inline-item'><a href='" . $base_url . $total_pages . "' class='dark-blue'> >> </a></li>";
     }
 
     $pagLink .= '</ul>';
@@ -109,9 +108,6 @@ function linkify($text)
 
     echo $text;
 }
-
-
-
 
 
 /* Function to make pixelated images
@@ -132,7 +128,7 @@ function pixelate($image, $output, $pixelate_x = 20, $pixelate_y = 20)
 {
     // check if the input file exists
     if (!file_exists($image)) {
-        echo 'File "'. $image .'" not found';
+        echo 'File "' . $image . '" not found';
     }
 
     // get the input file extension and create a GD resource from it
@@ -154,19 +150,19 @@ function pixelate($image, $output, $pixelate_x = 20, $pixelate_y = 20)
     $width = $size[0];
 
     // start from the top-left pixel and keep looping until we have the desired effect
-    for ($y = 0;$y < $height;$y += $pixelate_y+1) {
-        for ($x = 0;$x < $width;$x += $pixelate_x+1) {
+    for ($y = 0; $y < $height; $y += $pixelate_y + 1) {
+        for ($x = 0; $x < $width; $x += $pixelate_x + 1) {
             // get the color for current pixel
             $rgb = imagecolorsforindex($img, imagecolorat($img, $x, $y));
 
             // get the closest color from palette
             $color = imagecolorclosest($img, $rgb['red'], $rgb['green'], $rgb['blue']);
-            imagefilledrectangle($img, $x, $y, $x+$pixelate_x, $y+$pixelate_y, $color);
+            imagefilledrectangle($img, $x, $y, $x + $pixelate_x, $y + $pixelate_y, $color);
         }
     }
 
     // save the image
-    $output_name = $output .'_'. time() .'.jpg';
+    $output_name = $output . '_' . time() . '.jpg';
 
     imagejpeg($img, $output_name);
     imagedestroy($img);
@@ -176,79 +172,79 @@ function pixelate($image, $output, $pixelate_x = 20, $pixelate_y = 20)
 Link generation helpers
 */
 
-function t_link_user($username, $full=true)
+function t_link_user($username, $full = true)
 {
     $url = "https://twitter.com/$username";
 
     if ($full) {
-        echo  "<a href=\"$url\" target='_BLANK'>VIEW ON TWITTER</a>";
+        echo "<a href=\"$url\" target='_BLANK'>VIEW ON TWITTER</a>";
     } else {
         echo $url;
     }
 }
 
 
-function t_link_tweet($id, $full=true)
+function t_link_tweet($id, $full = true)
 {
     $url = "https://twitter.com/user/status/$id";
 
     if ($full) {
-        echo  "<a href=\"$url\" target='_BLANK'>VIEW ON TWITTER</a>";
+        echo "<a href=\"$url\" target='_BLANK'>VIEW ON TWITTER</a>";
     } else {
         echo $url;
     }
 }
 
-function t_like($id, $full=true)
+function t_like($id, $full = true)
 {
     $url = "https://twitter.com/intent/like?tweet_id=$id&related=tweetphelan,cycleinvaders";
 
     if ($full) {
-        echo  "<a href=\"$url\" target='_BLANK'>LIKE</a>";
+        echo "<a href=\"$url\" target='_BLANK'>LIKE</a>";
     } else {
         echo $url;
     }
 }
 
-function t_retweet($id, $full=true)
+function t_retweet($id, $full = true)
 {
     $url = "https://twitter.com/intent/retweet?tweet_id=$id&related=tweetphelan,cycleinvaders";
 
     if ($full) {
-        echo  "<a href=\"$url\" target='_BLANK'>RETWEET</a>";
+        echo "<a href=\"$url\" target='_BLANK'>RETWEET</a>";
     } else {
         echo $url;
     }
 }
 
-function t_reply($id, $full=true)
+function t_reply($id, $full = true)
 {
     $url = "https://twitter.com/intent/tweet?in_reply_to=$id&related=tweetphelan,cycleinvaders";
 
     if ($full) {
-        echo  "<a href=\"$url\" target='_BLANK'>REPLY</a>";
+        echo "<a href=\"$url\" target='_BLANK'>REPLY</a>";
     } else {
         echo $url;
     }
 }
 
-function t_text($text, $link='', $full=true)
+function t_text($text, $link = '', $full = true)
 {
     $url = "https://twitter.com/intent/tweet?text=$text&url=$link&related=tweetphelan,cycleinvaders";
 
     if ($full) {
-        echo  "<a href=\"$url\" target='_BLANK'>REPLY</a>";
+        echo "<a href=\"$url\" target='_BLANK'>REPLY</a>";
     } else {
         echo $url;
     }
 }
 
-function t_follow($id, $full=true)
+function t_follow($id, $full = true)
 {
     $url = "https://twitter.com/intent/follow?user_id=$id&related=tweetphelan,cycleinvaders";
 
     if ($full) {
-        echo  "<a href=\"$url\" target='_BLANK'>FOLLOW</a>";
+        echo "<a href=\"$url\" target='_BLANK'>FOLLOW</a>";
     } else {
         echo $url;
     }

@@ -2,84 +2,90 @@
 Colours
 */
 
-.red{
-color:#fc5554;
+.red {
+    color: #fc5554;
 }
 
-.green{
-  color:#20ff20;
-}
-
-
-.dark-blue{
-color:#5455ed;
+.green {
+    color: #20ff20;
 }
 
 
-.light-blue{
-color:#42ebf5;
+.dark-blue {
+    color: #5455ed;
 }
 
-.yellow{
-//color:#e6ce80;
-color:#FFEB52;
+
+.light-blue {
+    color: #42ebf5;
 }
 
-.purple{
-color:#c95bba;
+.yellow {
+/ / color: #e6ce80;
+    color: #FFEB52;
 }
 
-.light-blue-hilight{
-background-color:#42ebf5;
-color:#000;
+.purple {
+    color: #c95bba;
 }
 
-.dark-blue-hilight{
-background-color:#5455ed;
-color:#000;
-color:#FFEB52;
+.light-blue-hilight {
+    background-color: #42ebf5;
+    color: #000;
+}
+
+.dark-blue-hilight {
+    background-color: #5455ed;
+    color: #000;
+    color: #FFEB52;
 }
 
 body {
-  font-family: 'Press Start 2P', cursive;
-  background-color: #000000;
-  color: #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    background-color: #000000;
+    color: #ffffff;
 }
 
 a {
-  color: #20ff20;
+    color: #20ff20;
 }
 
 a:hover {
-  color: #fc5554;
-  color: #e6ce80;
-  text-decoration: none;
+    color: #fc5554;
+    color: #e6ce80;
+    text-decoration: none;
 }
 
 h1, h2, h3, h4, h5 {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
-aside{
-  border-right: 6px solid #fff;
-  background-image:url('/img/twitter.png');
-  background-position: bottom;
-  background-repeat: no-repeat;
+aside {
+    border-right: 6px solid #fff;
+    background-image: url('/img/twitter.png');
+    background-position: bottom;
+    background-repeat: no-repeat;
 }
-//aside .absolute-bottom {bottom:0;}
 
-aside .navbar{
-  background-color: #000;
+/
+/
+aside .absolute-bottom {
+    bottom: 0;
+}
+
+aside .navbar {
+    background-color: #000;
 }
 
 /* I can haz purple hamburger */
-.navbar-toggler{
+.navbar-toggler {
     width: 50px;
     height: 40px;
-    border:none;
-    margin-top:10px;
+    border: none;
+    margin-top: 10px;
 }
-.navbar-toggler .line{
+
+.navbar-toggler .line {
     width: 100%;
     float: left;
     height: 5px;
@@ -91,25 +97,24 @@ aside .navbar{
 Badges
 */
 
-.badge{
-  //padding:.4em .8em;
-  font-size:100%;
-  border-radius:0;
-  font-size:90%;
+.badge {
+/ / padding: .4 em .8 em;
+    font-size: 100%;
+    border-radius: 0;
+    font-size: 90%;
 
 }
-.badge-info{
-  background-color:#42ebf5;
-  color:#000;
+
+.badge-info {
+    background-color: #42ebf5;
+    color: #000;
 }
 
-.badge-sucess{
-  background-color:#42ebf5;
-  color:#000;
-  background-color:#20ff20;
+.badge-sucess {
+    background-color: #42ebf5;
+    color: #000;
+    background-color: #20ff20;
 }
-
-
 
 
 /*
@@ -117,58 +122,57 @@ Badges
   animation: blinker 1s linear infinite;
 } */
 ul.timeperiod a {
-  color: #42ebf5;
+    color: #42ebf5;
 }
 
 ul.timeperiod a:hover {
-  color: #e6ce80;
+    color: #e6ce80;
 }
 
 ul.timeperiod .active {
-  color: #c95bba;
-  text-decoration: blink;
-  -webkit-animation-name: blinker;
-  -webkit-animation-duration: 0.6s;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: ease-in-out;
-  -webkit-animation-direction: alternate;
+    color: #c95bba;
+    text-decoration: blink;
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 0.6s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-direction: alternate;
 
 }
 
 ul.timeperiod .active:before,
 ul.timeperiod .active:after {
-  content: '*';
+    content: '*';
 }
 
 ul.timeperiod table tr:first-child td,
 ul.timeperiod table tr:first-child td a {
-  color:#fc5554;
+    color: #fc5554;
 }
 
 ul.timeperiod table tr:first-child td a:hover {
-  color:#c95bba;
-  animation: blinker ;
+    color: #c95bba;
+    animation: blinker;
 }
-
 
 
 /*
 / INVADERS
 */
 .invaders {
-  font-size: 0.8rem;
+    font-size: 0.8rem;
 }
 
 /*
 PLAYERS*/
 
 .players .box a {
-  display: block;
+    display: block;
 }
 
 .players .box {
-  margin-bottom: 10px;
-  text-align: center;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 /* .players a.box{
@@ -183,95 +187,95 @@ PLAYERS*/
 
  } */
 .players h1 {
-  color: #c95bba;
+    color: #c95bba;
 }
 
 .players .box img {
-  height: 150px;
-  width: 150px;
-  margin: 1rem;
-  /* border: 5px solid #20ff20; */
+    height: 150px;
+    width: 150px;
+    margin: 1rem;
+    /* border: 5px solid #20ff20; */
 }
 
 .players .box:hover img {
-  /* border: 5px solid #e6ce80; */
+    /* border: 5px solid #e6ce80; */
 }
 
 .players .box .location {
-  font-size: 0.8rem;
-  color: #42ebf5;
+    font-size: 0.8rem;
+    color: #42ebf5;
 }
 
 /*
 Palyer
 */
 
-.player .description{
-  color:#c95bba;
+.player .description {
+    color: #c95bba;
 }
 
 .player img.avatar {
 
-  /* border: 10px solid #20ff20; */
+    /* border: 10px solid #20ff20; */
 }
 
 table {
-  width: 100%;
+    width: 100%;
 }
 
 table th,
 table td {
-  padding: 0.75rem;
-  vertical-align: top;
-  padding-bottom: 1.5rem;
+    padding: 0.75rem;
+    vertical-align: top;
+    padding-bottom: 1.5rem;
 }
 
 table thead th {
-  vertical-align: bottom;
+    vertical-align: bottom;
 }
 
 table th,
 table td,
 table thead th,
-table tbody+tbody {
-  border: 0;
+table tbody + tbody {
+    border: 0;
 }
 
 footer {
-  border-top: solid 0.5rem #fc5554;
-  font-size: 1.25rem;
-  font-weight: 300;
+    border-top: solid 0.5rem #fc5554;
+    font-size: 1.25rem;
+    font-weight: 300;
 }
-footer img{
-  margin-right:20px;
+
+footer img {
+    margin-right: 20px;
 
 }
 
-ul.pag{
-  font-size:2rem;
+ul.pag {
+    font-size: 2rem;
 }
 
 ul.pag li.active a {
-  color:#fc5554;
+    color: #fc5554;
 }
-
 
 
 /*
 Score Advace table`
 */
 
-.score_advance h1{
-  color:#42ebf5
+.score_advance h1 {
+    color: #42ebf5
 }
 
-.score_advance h2 button{
-  font-size:1.8rem;
+.score_advance h2 button {
+    font-size: 1.8rem;
 }
 
 .score_advance h2:hover button,
-.score_advance h2:active button{
-  text-decoration: none;
+.score_advance h2:active button {
+    text-decoration: none;
 }
 
 /*
@@ -307,37 +311,37 @@ Score Advace table`
     animation: blink 2s  alternate-reverse infinite;
  } */
 @-webkit-keyframes blinker {
-  from {
-    opacity: 1.0;
-  }
+    from {
+        opacity: 1.0;
+    }
 
-  to {
-    opacity: 0.0;
-  }
+    to {
+        opacity: 0.0;
+    }
 }
 
 .blink {
-  text-decoration: blink;
-  -webkit-animation-name: blinker;
-  -webkit-animation-duration: 0.6s;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: ease-in-out;
-  -webkit-animation-direction: alternate;
+    text-decoration: blink;
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 0.6s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-direction: alternate;
 }
 
 /*
 
 */
 
-.card{
-  background-color:#fc5554;
-  border-radius: 0;
+.card {
+    background-color: #fc5554;
+    border-radius: 0;
 }
 
-.card-block{
-  color:#fff;
+.card-block {
+    color: #fff;
 }
 
-.card-text{
-  font-size:0.8rem;
+.card-text {
+    font-size: 0.8rem;
 }

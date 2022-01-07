@@ -26,17 +26,15 @@ Add db and Twitter auth settings to `.env`
 
 ##### Initialise the database
 
-`/actions/init`    
+`/actions/init`
 
 ##### Bulk import tweets
 
-`/actions/import`   
-
+`/actions/import`
 
 ##### Get new tweets
 
-`/actions/update`   
-
+`/actions/update`
 
 ##### Update user info
 

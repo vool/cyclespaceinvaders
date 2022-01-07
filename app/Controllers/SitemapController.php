@@ -1,7 +1,6 @@
 <?php
-namespace CycleSpaceInvaders\Controllers;
 
-use CycleSpaceInvaders\Controllers\Controller;
+namespace CycleSpaceInvaders\Controllers;
 
 class SitemapController extends Controller
 {
@@ -16,7 +15,7 @@ class SitemapController extends Controller
     {
         //  $this->id = $id;
         parent::__construct();
-        $this->url = 'http://'.$_SERVER['HTTP_HOST'];
+        $this->url = 'http://' . $_SERVER['HTTP_HOST'];
     }
 
     /*
@@ -60,55 +59,40 @@ class SitemapController extends Controller
     {
         echo '
         <url>
-        <loc>'.$url.'</loc>
-        <changefreq>'.$freq.'</changefreq>
+        <loc>' . $url . '</loc>
+        <changefreq>' . $freq . '</changefreq>
         </url>
         ';
+    }
+
+    public function pages()
+    {
+        $pages = 'players, invaders, leader-board, get-involved,';
+        $allpage = explode(',', $pages);
+        foreach ($allpage as $page) {
+            $link = 'http://' . $_SERVER['HTTP_HOST'] . '/' . trim($page);
+            $this->feed($link, m);
+        }
     }
 
     private function players()
     {
         $sql = "SELECT `username`
-            FROM ".$_ENV['DB_USER_TABLE'];
+            FROM " . $_ENV['DB_USER_TABLE'];
 
 
-        $stmt  = $this->dbconn->prepare($sql);
+        $stmt = $this->dbconn->prepare($sql);
 
         $stmt->execute();
 
-        $res = $stmt ->fetchAll(\PDO::FETCH_ASSOC);
+        $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         if ($res) {
             foreach ($res as $r) {
-                $link = $this->url.'/player/@'.$this::clean($r['username']);
+                $link = $this->url . '/player/@' . $this::clean($r['username']);
                 $this->feed($link, a);
             }
         }
-    }
-
-
-    private function invaders()
-    {
-        $sql = "SELECT `id`
-            FROM ".$_ENV['DB_TWEET_TABLE'];
-
-        $stmt  = $this->dbconn->prepare($sql);
-
-        $stmt->execute();
-
-        $res = $stmt ->fetchAll(\PDO::FETCH_ASSOC);
-
-        if ($res) {
-            foreach ($res as $r) {
-                $link = $this->url.'/invader/'.$this::clean($r['id']);
-                $this->feed($link, m);
-            }
-        }
-    }
-
-    private function foot()
-    {
-        echo '</urlset>';
     }
 
     private function clean($string)
@@ -119,14 +103,27 @@ class SitemapController extends Controller
         return $string;
     }
 
-
-    public function pages()
+    private function invaders()
     {
-        $pages = 'players, invaders, leader-board, get-involved,';
-        $allpage = explode(',', $pages);
-        foreach ($allpage as $page) {
-            $link = 'http://'.$_SERVER['HTTP_HOST'].'/'.trim($page);
-            $this->feed($link, m);
+        $sql = "SELECT `id`
+            FROM " . $_ENV['DB_TWEET_TABLE'];
+
+        $stmt = $this->dbconn->prepare($sql);
+
+        $stmt->execute();
+
+        $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if ($res) {
+            foreach ($res as $r) {
+                $link = $this->url . '/invader/' . $this::clean($r['id']);
+                $this->feed($link, m);
+            }
         }
+    }
+
+    private function foot()
+    {
+        echo '</urlset>';
     }
 }

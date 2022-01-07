@@ -2,16 +2,16 @@
 
 <div class="container">
 
-  <div class="row">
-    <div class="col-lg-12 text-center">
-      <h1 class="mt-5 mb-4 red display-4">*** <span class="blink">404</span>  ***</h1>
-      <br>
-      <h2> <?=$v($error)?> </h2>
-    </br>
-      <h1 class="mt-5 mb-4 display-4">:(</h1>
-      <?php if (isset($text)) {
-    $v($text);
-}?>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="mt-5 mb-4 red display-4">*** <span class="blink">404</span> ***</h1>
+            <br>
+            <h2> <?= $v($error) ?> </h2>
+            </br>
+            <h1 class="mt-5 mb-4 display-4">:(</h1>
+            <?php if (isset($text)) {
+                $v($text);
+            } ?>
+        </div>
     </div>
-  </div>
 </div>

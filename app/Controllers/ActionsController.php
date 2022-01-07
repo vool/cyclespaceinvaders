@@ -4,9 +4,8 @@
 namespace CycleSpaceInvaders\Controllers;
 
 use Carbon\Carbon;
-use DG\Twitter\Twitter;
 use DG\Twitter\Exception;
-use CycleSpaceInvaders\Controllers\Controller;
+use DG\Twitter\Twitter;
 
 class ActionsController extends Controller
 {
@@ -50,14 +49,14 @@ class ActionsController extends Controller
 
         $chunks = array_chunk($array, 50);
 
-        $i =0;
+        $i = 0;
 
         foreach ($chunks as $chunk) {
             $t_ids = array();
 
             foreach ($chunk as $a) {
 
-            // //if(strpos(strtolower($a['text']), '#freethecyclelanes')){
+                // //if(strpos(strtolower($a['text']), '#freethecyclelanes')){
                 // if(in_arrayi('freethecyclelanes',$a['hashtags'] )){
                 //   echo 1;
                 // }else{
@@ -73,11 +72,11 @@ class ActionsController extends Controller
 
             $tweet_ids = implode(',', $t_ids);
 
-            echo 'processing chunk - '. $tweet_ids. '<br>';
+            echo 'processing chunk - ' . $tweet_ids . '<br>';
 
             //if($i>5){
 
-            $tweets = $this->twitter->request('statuses/lookup', 'GET', ['id' => "$tweet_ids", 'include_entities'=>true, 'tweet_mode' => 'extended']);
+            $tweets = $this->twitter->request('statuses/lookup', 'GET', ['id' => "$tweet_ids", 'include_entities' => true, 'tweet_mode' => 'extended']);
 
             $this->ingest($tweets);
 
@@ -102,45 +101,23 @@ class ActionsController extends Controller
         // $this->ingest($tweets);
     }
 
-
-    public function update()
-    {
-        $this->logger->info("Doing update");
-        // set options
-        $opts=array('q'=>$_ENV['HASHTAG']."+exclude:retweets",
-            'result_type'=>'mixed',
-            'include_entities'=>true,
-            'tweet_mode' => 'extended',
-            'count'=>1000
-            );
-
-        // set since tweet
-        $opts['since_id'] = $this->getLatestStatusId(); // todo this is the last tweet in the db (ie last tweet with media) rather thans the last tweet parsed
-        //  $opts['since_id'] = 610341092790259712;//1218635639794688000; //$this->getLatestStatusId();// $previous_tweet_id;
-
-        $tweets=$this->twitter->search($opts);
-
-        $this->ingest($tweets);
-    }
-
-
     private function ingest($tweets, $welcome = false)
     {
 
-      // get the town list
+        // get the town list
         $sql = 'SELECT LOWER(`townName`) FROM `towns`';
 
-        $stmt  = $this->dbconn->prepare($sql);
+        $stmt = $this->dbconn->prepare($sql);
 
         $stmt->execute();
 
-        $this->towns = $stmt ->fetchAll(\PDO::FETCH_COLUMN, 0);
+        $this->towns = $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
 
         //process each twat
 
         foreach ($tweets as $tweet) {
 
-                // check the urls for youtube
+            // check the urls for youtube
             $youtube = null;
 
             if ($tweet->entities && $tweet->entities->urls) {
@@ -158,15 +135,15 @@ class ActionsController extends Controller
             if ($youtube || (isset($tweet->extended_entities) && isset($tweet->extended_entities->media))) {
                 if (isset($tweet->extended_entities) && isset($tweet->extended_entities->media)) {
 
-                        // chcek if user exists, if not add them
+                    // chcek if user exists, if not add them
                     if (!isPlayer($this->dbconn, $tweet->user->id)) {
 
-                          // add user
+                        // add user
                         if ($this->addPlayer($tweet->user->id, $tweet->user->name, $tweet->user->screen_name, $tweet->user->profile_image_url_https, $tweet->user->location, $tweet->user->description, $tweet->user->url, Carbon::parse($tweet->created_at)->toDateTimeString())) {
-                            echo "User ".$tweet->user->name." addded successfully !<br>";
-                            $this->logger->info("User ".$tweet->user->name." addded successfully !");
+                            echo "User " . $tweet->user->name . " addded successfully !<br>";
+                            $this->logger->info("User " . $tweet->user->name . " addded successfully !");
                             if ($welcome) {
-                                $this->logger->info("Welcoming user ".$tweet->user->name);
+                                $this->logger->info("Welcoming user " . $tweet->user->name);
                                 //TODO
                             }
                         }
@@ -180,8 +157,8 @@ class ActionsController extends Controller
                         $score = $this->calcScore($tweet);
 
                         if ($this->addTweet($tweet->id_str, $tweet->user->id_str, $tweet->full_text, JSON_encode($tweet->extended_entities->media), $youtube, JSON_encode(array_column($tweet->entities->hashtags, 'text')), JSON_encode($tweet->coordinates), JSON_encode($tweet->place), $score, Carbon::parse($tweet->created_at)->toDateTimeString())) {
-                            echo "Tweet ".$tweet->id_str." addded successfully !<br>";
-                            $this->logger->info("Tweet ".$tweet->id_str." addded successfully !");
+                            echo "Tweet " . $tweet->id_str . " addded successfully !<br>";
+                            $this->logger->info("Tweet " . $tweet->id_str . " addded successfully !");
                         }
                     }
                 }
@@ -195,159 +172,35 @@ class ActionsController extends Controller
 
     private function addPlayer($id, $screen_name, $username, $avatar, $location, $description, $url, $created_at)
     {
-        $sql = "INSERT INTO ".$_ENV['DB_USER_TABLE']." (`username`, `screenname`, `location`, `description`, `url`, `avatar`, `id`, `created_at`) VALUES (:username, :screenname, :location, :description, :url, :avatar, :id, :created_at)";
+        $sql = "INSERT INTO " . $_ENV['DB_USER_TABLE'] . " (`username`, `screenname`, `location`, `description`, `url`, `avatar`, `id`, `created_at`) VALUES (:username, :screenname, :location, :description, :url, :avatar, :id, :created_at)";
 
         $stmt = $this->dbconn->prepare($sql);
 
         try {
             $stmt->execute(
-                 ['username' => $username,
-                   'screenname' => $screen_name,
-                   'location' => $location,
-                   'description' => $description,
-                   'url' => $url,
-                   'avatar' => $avatar,
-                   'id' => $id,
-                   'created_at' => $created_at
-                 ]
-             );
+                ['username' => $username,
+                    'screenname' => $screen_name,
+                    'location' => $location,
+                    'description' => $description,
+                    'url' => $url,
+                    'avatar' => $avatar,
+                    'id' => $id,
+                    'created_at' => $created_at
+                ]
+            );
         } catch (Exception $e) {
-            echo "Error adding user : ".$e->getMessage();
+            echo "Error adding user : " . $e->getMessage();
 
             return false;
         }
 
         return true;
-    }
-
-    private function updatePlayer($id, $screen_name, $username, $avatar, $location, $description, $url)
-    {
-        $sql = "UPDATE ".$_ENV['DB_USER_TABLE']." SET username=:username, screenname=:screenname, location=:location, description=:description, url=:url, avatar=:avatar WHERE id=:id";
-
-
-        $stmt = $this->dbconn->prepare($sql);
-
-        try {
-            $stmt->execute(
-                 ['id' => $id,
-                   'username' => $username,
-                   'screenname' => $screen_name,
-                   'location' => $location,
-                   'description' => $description,
-                   'url' => $url,
-                   'avatar' => $avatar
-                 ]
-             );
-        } catch (Exception $e) {
-            echo "Error updating user : ".$e->getMessage();
-
-            return false;
-        }
-
-        return true;
-    }
-
-    public function updatePlayers()
-    {
-        $this->logger->info("Doing update players");
-
-        echo "Doing update players";
-
-        $this->dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-
-        $sql = "SELECT * FROM ".$_ENV['DB_USER_TABLE'];
-
-        $stmt  = $this->dbconn->prepare($sql);
-
-        $stmt->execute();
-
-        $res = $stmt ->fetchAll();
-
-        foreach($res as $player){
-          echo "<hr>";
-          echo "Updating @".$player['username'] ." | ". $player['screenname']." | ". $player['id'];
-
-          //$player['id'] = 1210263422778118147;
-
-          try {
-
-              $user = $this->twitter->request('users/show', 'GET', ['user_id' => $player['id']]);
-
-              try {
-
-                $this->updateplayer($player['id'], $user->name, $user->screen_name, $user->profile_image_url, $user->location, $user->description, $user->url);
-
-                } catch (Exception $e) {
-                    echo "Error updating  player : ".$e->getMessage();
-
-                    return false;
-                }
-
-            } catch (Exception $e) {
-
-                echo "Error getting player info : ".$e->getMessage();
-
-                //return false;
-            }
-
-
-        }
-
-        //dd(count($res));
-
-            return true;
-      }
-
-
-    private function addTweet($id, $user_id, $text, $media, $youtube, $hashtags, $coordinates, $place, $score, $created_at)
-    {
-        $sql = "INSERT INTO `tweets` (`id`, `user_id`, `text`, `media`, `youtube`, `hashtags`, `coordinates`, `place`, `score`, `created_at`) VALUES (:id, :user_id, :text, :media, :youtube, :hashtags, :coordinates, :place, :score, :created_at)";
-
-        $stmt = $this->dbconn->prepare($sql);
-
-        try {
-            $stmt->execute(
-                 ["id" => $id,
-                   'user_id' => $user_id,
-                   'text' => $text,
-                   'media' => $media,
-                   'youtube' => $youtube,
-                   'hashtags' => $hashtags,
-                   'coordinates' => $coordinates,
-                   'place' => $place,
-                   'score' => $score,
-                   'created_at' => $created_at
-                 ]
-             );
-        } catch (Exception $e) {
-            echo "Error adding tweet : ".$e->getMessage();
-
-            return false;
-        }
-
-        return true;
-    }
-
-    private function getLatestStatusId()
-    {
-        // get the latest twwet entry
-        $sql="SELECT `id` FROM `tweets` ORDER BY `created_at` DESC LIMIT 0, 1";
-
-        $stmt  = $this->dbconn->prepare($sql);
-
-        $stmt->execute();
-
-        $res = $stmt ->fetch();
-
-        //$opts = array('include_entities' => true, 'q' => '#freethecyclelanes');
-
-        return $res['id'];
     }
 
     private function calcScore($tweet)
     {
 
-      // The fault
+        // The fault
         $s = 10;
 
         if ($tweet->coordinates) {
@@ -369,5 +222,148 @@ class ActionsController extends Controller
         };
 
         return $s;
+    }
+
+    private function addTweet($id, $user_id, $text, $media, $youtube, $hashtags, $coordinates, $place, $score, $created_at)
+    {
+        $sql = "INSERT INTO `tweets` (`id`, `user_id`, `text`, `media`, `youtube`, `hashtags`, `coordinates`, `place`, `score`, `created_at`) VALUES (:id, :user_id, :text, :media, :youtube, :hashtags, :coordinates, :place, :score, :created_at)";
+
+        $stmt = $this->dbconn->prepare($sql);
+
+        try {
+            $stmt->execute(
+                ["id" => $id,
+                    'user_id' => $user_id,
+                    'text' => $text,
+                    'media' => $media,
+                    'youtube' => $youtube,
+                    'hashtags' => $hashtags,
+                    'coordinates' => $coordinates,
+                    'place' => $place,
+                    'score' => $score,
+                    'created_at' => $created_at
+                ]
+            );
+        } catch (Exception $e) {
+            echo "Error adding tweet : " . $e->getMessage();
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public function update()
+    {
+        $this->logger->info("Doing update");
+        // set options
+        $opts = array('q' => $_ENV['HASHTAG'] . "+exclude:retweets",
+            'result_type' => 'mixed',
+            'include_entities' => true,
+            'tweet_mode' => 'extended',
+            'count' => 1000
+        );
+
+        // set since tweet
+        $opts['since_id'] = $this->getLatestStatusId(); // todo this is the last tweet in the db (ie last tweet with media) rather thans the last tweet parsed
+        //  $opts['since_id'] = 610341092790259712;//1218635639794688000; //$this->getLatestStatusId();// $previous_tweet_id;
+
+        $tweets = $this->twitter->search($opts);
+
+        $this->ingest($tweets);
+    }
+
+    private function getLatestStatusId()
+    {
+        // get the latest twwet entry
+        $sql = "SELECT `id` FROM `tweets` ORDER BY `created_at` DESC LIMIT 0, 1";
+
+        $stmt = $this->dbconn->prepare($sql);
+
+        $stmt->execute();
+
+        $res = $stmt->fetch();
+
+        //$opts = array('include_entities' => true, 'q' => '#freethecyclelanes');
+
+        return $res['id'];
+    }
+
+    public function updatePlayers()
+    {
+        $this->logger->info("Doing update players");
+
+        echo "Doing update players";
+
+        $this->dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+
+        $sql = "SELECT * FROM " . $_ENV['DB_USER_TABLE'];
+
+        $stmt = $this->dbconn->prepare($sql);
+
+        $stmt->execute();
+
+        $res = $stmt->fetchAll();
+
+        foreach ($res as $player) {
+            echo "<hr>";
+            echo "Updating @" . $player['username'] . " | " . $player['screenname'] . " | " . $player['id'];
+
+            //$player['id'] = 1210263422778118147;
+
+            try {
+
+                $user = $this->twitter->request('users/show', 'GET', ['user_id' => $player['id']]);
+
+                try {
+
+                    $this->updateplayer($player['id'], $user->name, $user->screen_name, $user->profile_image_url, $user->location, $user->description, $user->url);
+
+                } catch (Exception $e) {
+                    echo "Error updating  player : " . $e->getMessage();
+
+                    return false;
+                }
+
+            } catch (Exception $e) {
+
+                echo "Error getting player info : " . $e->getMessage();
+
+                //return false;
+            }
+
+
+        }
+
+        //dd(count($res));
+
+        return true;
+    }
+
+    private function updatePlayer($id, $screen_name, $username, $avatar, $location, $description, $url)
+    {
+        $sql = "UPDATE " . $_ENV['DB_USER_TABLE'] . " SET username=:username, screenname=:screenname, location=:location, description=:description, url=:url, avatar=:avatar WHERE id=:id";
+
+
+        $stmt = $this->dbconn->prepare($sql);
+
+        try {
+            $stmt->execute(
+                ['id' => $id,
+                    'username' => $username,
+                    'screenname' => $screen_name,
+                    'location' => $location,
+                    'description' => $description,
+                    'url' => $url,
+                    'avatar' => $avatar
+                ]
+            );
+        } catch (Exception $e) {
+            echo "Error updating user : " . $e->getMessage();
+
+            return false;
+        }
+
+        return true;
     }
 }

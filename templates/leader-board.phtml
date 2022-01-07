@@ -2,67 +2,69 @@
 
 <div class="container leaderboard">
 
-  <div class="row">
-    <div class="col-lg-12 text-center">
-      <h1 class="mt-5 mb-4 red display-4">*** Hi Score ***</h1>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h1 class="mt-5 mb-4 red display-4">*** Hi Score ***</h1>
 
-      <ul class="nav justify-content-center timeperiod">
-        <li class="nav-item">
-          <a class="nav-link<?php if ($mode ==  'day'):?> active<?php endif; ?>" href="/leader-board/day">DAY</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link<?php if ($mode ==  'week'):?> active <?php endif; ?>" href="/leader-board/week">WEEK</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link<?php if ($mode ==  'month'):?> active<?php endif; ?>" href="/leader-board/month">MONTH</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link<?php if ($mode ==  'year'):?> active<?php endif; ?>" href="/leader-board/year">YEAR</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link<?php if (!$mode):?> active<?php endif; ?>" href="/leader-board/">ALL TIME</a>
-        </li>
-      </ul>
+            <ul class="nav justify-content-center timeperiod">
+                <li class="nav-item">
+                    <a class="nav-link<?php if ($mode == 'day'): ?> active<?php endif; ?>"
+                       href="/leader-board/day">DAY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link<?php if ($mode == 'week'): ?> active <?php endif; ?>" href="/leader-board/week">WEEK</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link<?php if ($mode == 'month'): ?> active<?php endif; ?>" href="/leader-board/month">MONTH</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link<?php if ($mode == 'year'): ?> active<?php endif; ?>" href="/leader-board/year">YEAR</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link<?php if (!$mode): ?> active<?php endif; ?>" href="/leader-board/">ALL TIME</a>
+                </li>
+            </ul>
 
-  <table class="h4 m-5">
-    <thead>
-      <tr>
-        <th scope="col">RANK</th>
-        <th scope="col">NAME</th>
-        <th scope="col">SCORE</th>
-      </tr>
-    </thead>
-    <tbody>
+            <table class="h4 m-5">
+                <thead>
+                <tr>
+                    <th scope="col">RANK</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">SCORE</th>
+                </tr>
+                </thead>
+                <tbody>
 
-      <?php
-      $i = 1;
-      foreach ($users as $user): ?>
-        <tr>
-          <td scope="row"><?=$v($i)?></td>
-          <td>
-            <a href="/player/@<?=$v($user["username"])?>">
-              <!-- <img class="mx-auto rounded-circle img-fluid" src="<?=$v($user["avatar"])?>" width="50px"/>-->
-              @<?=$v($user["username"])?>
-            </a>
-        </td>
-          <td><?=$v($user["total_score"])?><br><small class="yellow">(<?=$v($user["tweet_count"])?>)</small></td>
-          <td> </td>
-        </tr>
+                <?php
+                $i = 1;
+                foreach ($users as $user): ?>
+                    <tr>
+                        <td scope="row"><?= $v($i) ?></td>
+                        <td>
+                            <a href="/player/@<?= $v($user["username"]) ?>">
+                                <!-- <img class="mx-auto rounded-circle img-fluid" src="<?= $v($user["avatar"]) ?>" width="50px"/>-->
+                                @<?= $v($user["username"]) ?>
+                            </a>
+                        </td>
+                        <td><?= $v($user["total_score"]) ?><br><small class="yellow">(<?= $v($user["tweet_count"]) ?>
+                                )</small></td>
+                        <td></td>
+                    </tr>
 
-  <?php
-  $i ++;
-  endforeach ?>
+                    <?php
+                    $i++;
+                endforeach ?>
 
-    </tbody>
-  </table>
+                </tbody>
+            </table>
 
-  </div>
-  </div>
+        </div>
+    </div>
 </div>
 
 
 <?php $v->push('scripts') ?>
-    <script>
-        // Some JavaScript
-    </script>
+<script>
+    // Some JavaScript
+</script>
 <?php $v->end() ?>
