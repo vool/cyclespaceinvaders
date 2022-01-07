@@ -34,10 +34,12 @@ class Controller
             // set the PDO error mode to exception
             $this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //echo "Connected successfully";
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
+
             //echo "Connection failed: " . $e->getMessage();
             //die();
-            echo $this->tpl->render('errors::db_cxn_error');
+            echo $this->tpl->render('errors::db_cxn_error', ['error_code' => $e->getCode()]);
+            exit();
         }
 
         // create a log channel

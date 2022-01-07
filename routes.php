@@ -1,10 +1,7 @@
 <?php
 
 // Custom 404 Handler
-$router->set404(function () {
-    header('HTTP/1.1 404 Not Found');
-    echo '404, route not found!';
-});
+$router->set404('ErrorController@notFound');
 
 //Before Router Middleware
 $router->before('GET', '/.*', function () {
