@@ -56,5 +56,5 @@ $router->mount('/actions', function () use ($router) {
 
     //$router->get('/init', 'DbSetupController@initDB');
 
-    $router->get('/update-players', 'ActionsController@updatePlayers');
+    $router->get('/update-players(/\d+)?', 'ActionsController@updatePlayers');
 });

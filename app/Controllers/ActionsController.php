@@ -290,9 +290,10 @@ class ActionsController extends Controller
         return $res['id'];
     }
 
-    public function updatePlayers()
+    public function updatePlayers($id = null)
     {
-        $this->logger->info("Doing update players");
+
+        $this->logger->info("Doing update player(s) $id");
 
         echo "Doing update players";
 
@@ -300,7 +301,15 @@ class ActionsController extends Controller
 
         $sql = "SELECT * FROM " . $_ENV['DB_USER_TABLE'];
 
+        if(isset($id) && is_numeric($id)){
+            $sql .= " WHERE `id` = :id  LIMIT 1";
+        }
+
         $stmt = $this->dbconn->prepare($sql);
+
+        if(isset($id) && is_numeric($id)) {
+            $stmt->execute([":id" => $id]);
+        }
 
         $stmt->execute();
 
