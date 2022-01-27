@@ -89,19 +89,3 @@
     </div>
 </div>
 
-
-<?php $v->push('scripts') ?>
-
-<script>
-    // Some JavaScript
-    $(function () {
-        console.log("ready!");
-
-        var myvalues = [10, 8, 5, 7, 4, 4, 1];
-        $('.dynamicbar').sparkline(myvalues, {type: 'bar', barColor: 'green', barWidth: 20});
-
-    });
-
-
-</script>
-<?php $v->end() ?>
