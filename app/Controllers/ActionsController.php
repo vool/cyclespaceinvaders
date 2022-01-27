@@ -6,6 +6,7 @@ namespace CycleSpaceInvaders\Controllers;
 use Carbon\Carbon;
 use DG\Twitter\Exception;
 use DG\Twitter\Twitter;
+use PDO;
 
 class ActionsController extends Controller
 {
@@ -111,7 +112,7 @@ class ActionsController extends Controller
 
         $stmt->execute();
 
-        $this->towns = $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
+        $this->towns = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
         //process each twat
 
@@ -213,13 +214,13 @@ class ActionsController extends Controller
         if (array_uintersect(array_column($tweet->entities->hashtags, 'text'), $this->towns, "strcasecmp")) {
             $s += 5;
             echo "Score #town<br>";
-        };
+        }
 
         //ssh - if AGS are taged
         if (array_uintersect(array_column($tweet->entities->user_mentions, 'screen_name'), $this->mentions, "strcasecmp")) {
             $s += 3;
             echo "Score AGS mentioned<br>";
-        };
+        }
 
         return $s;
     }
@@ -295,7 +296,7 @@ class ActionsController extends Controller
 
         echo "Doing update players";
 
-        $this->dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $this->dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
         $sql = "SELECT * FROM " . $_ENV['DB_USER_TABLE'];
 

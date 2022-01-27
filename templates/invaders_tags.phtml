@@ -1,30 +1,8 @@
-<?php $v->layout('layout', ['title' => 'Invaders']) ?>
-
+<?php $v->layout('layout') ?>
 <div class="container invaders">
     <div class="row">
         <div class="col-lg-12 text-center">
             <h1 class="mt-5 mb-4 yellow">*** <span class="blink"><?= $v($total) ?></span> INVADERS *** </h1>
-
-            <?php
-            // setthe page no if not set, required for period routing in date finlter and pagination$page = $page ?: 1;?>
-
-            <!-- <ul class="nav justify-content-center timeperiod">
-           <li class="nav-item">
-             <a class="nav-link<?php if (!$mode): ?> active<?php endif; ?>" href="/invaders/<?= $v($page) ?>">ALL TIME</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link<?php if ($mode == 'day'): ?> active<?php endif; ?>" href="/invaders/<?= $v($page) ?>/day">DAY</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link<?php if ($mode == 'week'): ?> active <?php endif; ?>" href="/invaders/<?= $v($page) ?>/week">WEEK</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link<?php if ($mode == 'month'): ?> active<?php endif; ?>" href="/invaders/<?= $v($page) ?>/month">MONTH</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link<?php if ($mode == 'year'): ?> active<?php endif; ?>" href="/invaders/<?= $v($page) ?>/year">YEAR</a>
-           </li>
-         </ul> -->
 
         </div>
 

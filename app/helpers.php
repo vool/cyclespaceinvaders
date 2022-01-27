@@ -84,7 +84,7 @@ function generatePageLinks($pn, $total_pages, $base_url = '/')
             //$pagLink .= "<li class='list-inline-item'><a href='".$base_url.($k+$i)."'>".($k+$i)."</a></li>";
             $pagLink .= "<li class='list-inline-item" . $active . "'><a href='" . $base_url . ($k + $i) . "'>" . ($k + $i) . "</a></li>";
         }
-    };
+    }
 
 
     // Show next and last-page links.

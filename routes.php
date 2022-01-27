@@ -14,12 +14,14 @@ $router->get('/(\d+)', function ($page) use ($router) {
     call_user_func_array([new CycleSpaceInvaders\Controllers\HomeController, 'Home'], [$page]);
 });
 
-// Static route: /hello
+/*
+ * Leader Board
+ */
 $router->get('/leader-board(/\w+)?', 'LeaderBoardController@allTime');//function () use ($tpl) {);
 
 /*
-Invaders
-*/
+ * Invaders
+ */
 
 $router->get('/tag(/\w+)?(/\d+)?', 'InvaderController@tag');
 
@@ -35,16 +37,6 @@ $router->get('/players(/\d+)?', 'PlayerController@index');
 $router->get('/player/(@\w+)(/\d+)?', function ($username, $page) {
     call_user_func_array([new CycleSpaceInvaders\Controllers\PlayerController, 'Show'], [$username, is_null($page) ? 1 : $page]);
 });
-
-/*
-Map
-*/
-// $router->get('/map', function () {
-//     echo '<h1>bsdsdder</h1><p>Visit <code>/hello/<em>name</em></code> to get your Hello World mojo on!</p>';
-// });
-
-// Static route: /hello
-//$router->get('/free-the-what-now', 'PageController@what');
 
 $router->get('/get-involved', 'PageController@getInvolved');
 

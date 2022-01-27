@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CycleSpaceInvaders\Controllers;
 
 class PageController extends Controller
@@ -9,13 +8,6 @@ class PageController extends Controller
     {
         parent::__construct();
     }
-
-
-    public function what()
-    {
-        echo $this->tpl->render('what');
-    }
-
 
     public function getInvolved()
     {
@@ -32,8 +24,4 @@ class PageController extends Controller
         echo $this->tpl->render('get-involved', ['rcpgs' => $rcpgs]);
     }
 
-    public function credit()
-    {
-        echo $this->tpl->render('get-involved');
-    }
 }

@@ -2,6 +2,8 @@
 
 namespace CycleSpaceInvaders\Controllers;
 
+use PDO;
+
 class PlayerController extends Controller
 {
 
@@ -42,7 +44,7 @@ class PlayerController extends Controller
         $offset = ($page - 1) * $this->ppage;
         /* End Paging Info */
 
-        $this->dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $this->dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
         $sql = "SELECT *
               FROM " . $_ENV['DB_USER_TABLE'] . " LIMIT :offset, :limit";
@@ -58,11 +60,8 @@ class PlayerController extends Controller
 
         $res = $stmt->fetchAll();
 
-        // Preassign data to the layout
-        $this->tpl->addData(['title' => ' ????', 'description' => '??.', 'layout']);
-
         // Render a template
-        echo $this->tpl->render('players', ['name' => 'jjJonathan', 'players' => $res, 'total' => $total_records, 'page' => $page, 'total_pages' => $total_pages]);
+        echo $this->tpl->render('players', ['players' => $res, 'total' => $total_records, 'page' => $page, 'total_pages' => $total_pages]);
     }
 
     /*
@@ -73,9 +72,8 @@ class PlayerController extends Controller
     public function Show($username, $page = 1)
     {
 
-        //echo pixelate("../public/img/test.jpg", "testing", 5,5);
+        //why is this not been set as default fann_clear_scaling_params
 
-        //why is this not been set as defaut fann_clear_scaling_params
         if (!$page) {
             $page = 1;
         }
@@ -119,7 +117,7 @@ class PlayerController extends Controller
 
         $score = $row['total_score'];
 
-        $this->dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $this->dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
         $sql = "SELECT * FROM `tweets`
               WHERE `user_id` = :user_id
@@ -137,14 +135,12 @@ class PlayerController extends Controller
             //var_dump($stmt->debugDumpParams());
         }
 
-        $tweets = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $tweets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // If out of bounds, send em home
         if ($page > 0 && count($tweets) == 0) { // todo - this shod be for user info ?
 
             header("location: /player/@" . $username);
-
-            //exit; si this needed
         }
 
         // get last active date

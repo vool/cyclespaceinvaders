@@ -2,6 +2,8 @@
 
 namespace CycleSpaceInvaders\Controllers;
 
+use PDO;
+
 class SitemapController extends Controller
 {
 
@@ -85,7 +87,7 @@ class SitemapController extends Controller
 
         $stmt->execute();
 
-        $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($res) {
             foreach ($res as $r) {
@@ -112,7 +114,7 @@ class SitemapController extends Controller
 
         $stmt->execute();
 
-        $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($res) {
             foreach ($res as $r) {

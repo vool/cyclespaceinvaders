@@ -2,6 +2,8 @@
 
 namespace CycleSpaceInvaders\Controllers;
 
+use PDO;
+
 class InvaderController extends Controller
 {
 
@@ -59,9 +61,7 @@ class InvaderController extends Controller
         /* End Paging Info */
 
 
-        $this->dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-
-        //$sql="SELECT `tweet` FROM `ftcl` ORDER BY `timestamp` ASC LIMIT :offset, :limit";
+        $this->dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
         $sql = "SELECT *, t.id, t.created_at
                 FROM " . $_ENV['DB_TWEET_TABLE'] . " t
@@ -75,34 +75,27 @@ class InvaderController extends Controller
 
         $stmt->execute([":limit" => $this->ppage, ":offset" => $offset]);
 
-        $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // If out of bounds, send em home
         if ($page > 1 && count($res) == 0) {
             header("location: /");
-
-            //exit; si this needed
         }
 
         //// TEMP:
         //$mode = null;
 
-        // Preassign data to the layout
-        $this->tpl->addData(['title' => ' ????', 'description' => '??.', 'layout']);
-
         // Render a template
-        echo $this->tpl->render('invaders', ['name' => 'Jonathan', 'tweets' => $res, 'total' => $total_records, 'page' => $page, 'total_pages' => $total_pages, 'mode' => $mode]);
+        echo $this->tpl->render('invaders', ['title' => 'Invaders', 'tweets' => $res, 'total' => $total_records, 'page' => $page, 'total_pages' => $total_pages, 'mode' => $mode]);
     }
 
     public function tag($tag, $page = 1)//: string
     {
 
-        //why is this not been set as defaut fann_clear_scaling_params
+        //why is this not been set as default fann_clear_scaling_params
         if (!$page) {
             $page = 1;
         }
-
-        //tump;
 
         $range = '';
 
@@ -120,9 +113,7 @@ class InvaderController extends Controller
 
         /* End Paging Info */
 
-        $this->dbconn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-
-        //$sql="SELECT `tweet` FROM `ftcl` ORDER BY `timestamp` ASC LIMIT :offset, :limit";
+        $this->dbconn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
         $sql = "SELECT *, t.id, t.created_at
                 FROM " . $_ENV['DB_TWEET_TABLE'] . " t
@@ -137,13 +128,11 @@ class InvaderController extends Controller
 
         $stmt->execute([":limit" => $this->ppage, ":offset" => $offset]);
 
-        $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // If out of bounds, send em home
         if ($page > 1 && count($res) == 0) {
             header("location: /");
-
-            //exit; si this needed
         }
 
 
@@ -153,7 +142,6 @@ class InvaderController extends Controller
         // Render a template
         echo $this->tpl->render('invaders_tag', ['tweets' => $res, 'total' => $total_records, 'page' => $page, 'total_pages' => $total_pages, 'tag' => $tag]);
     }
-
 
     public function show($id)
     {
@@ -169,15 +157,12 @@ class InvaderController extends Controller
 
         $stmt->execute(['id' => $id]);
 
-        $res = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($res) { // if invader exists
 
-            // Preassign data to the layout
-            $this->tpl->addData(['title' => ' ????', 'description' => '??.', 'layout']);
-
             // Render a template
-            echo $this->tpl->render('invader', ['name' => 'jjJonathan', 'data' => $res]);
+            echo $this->tpl->render('invader', ['data' => $res]);
         } else {
             // Render a template
             echo $this->tpl->render('errors::404', ['error' => 'Invader not found :(']);

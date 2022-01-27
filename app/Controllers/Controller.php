@@ -6,6 +6,7 @@ use League\Plates\Engine;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PDO;
+use PDOException;
 
 //use Carbon\Carbon;
 
@@ -36,7 +37,7 @@ class Controller
             // set the PDO error mode to exception
             $this->dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //echo "Connected successfully";
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
 
             //echo "Connection failed: " . $e->getMessage();
             //die();

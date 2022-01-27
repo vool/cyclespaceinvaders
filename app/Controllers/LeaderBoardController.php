@@ -90,7 +90,7 @@ class LeaderBoardController extends Controller
         $total = count($res);
 
         // Preassign data to the layout
-        $this->tpl->addData(['title' => 'Leader Board', 'description' => 'Game Leader board', 'layout']);;
+        $this->tpl->addData(['title' => 'Leader Board', 'description' => 'Game Leader board', 'layout']);
         // Render a template
         echo $this->tpl->render('leader-board', ['users' => $res, 'total' => $total, 'mode' => $mode]);
     }
