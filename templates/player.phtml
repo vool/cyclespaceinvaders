@@ -43,7 +43,7 @@
             } ?>
 
             <p class="description">
-                <?= $v($user['description']) ?>
+                <?= $v(linkify($user['description'])) ?>
             </p>
 
             <?php $url = 'https://cyclespaceinvaders.com/player/@' . $user['username'];// "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";?>
