@@ -84,12 +84,14 @@ class HomeController extends Controller
 
         $leaders = $stmt->fetchAll();
 
+        $year = date("Y");
+
         // Preassign data to the layout
         $this->tpl->addData(['title' => 'Home',
             'description' => 'Cycle Space has been INVADED ! Join ' . $total_users . ' players who are capturing these invaders #FreeTheCycleLanes.',
             'layout'
         ]);
         // Render a template
-        echo $this->tpl->render('home', ['tweets' => $tweets, 'players' => $users, 'total_invaders' => $total_tweets, 'total_players' => $total_users, 'high_score' => $high_score, 'leaders' => $leaders]);
+        echo $this->tpl->render('home', ['tweets' => $tweets, 'players' => $users, 'total_invaders' => $total_tweets, 'total_players' => $total_users, 'high_score' => $high_score, 'leaders' => $leaders, 'year' => $year]);
     }
 }
