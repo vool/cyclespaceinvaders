@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-sparkline": "^2.4.0",
     "masonry-layout": "^4.2.2"
   },
