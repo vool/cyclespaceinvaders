@@ -77,7 +77,35 @@
         $('.nav-button').click(function () {
             $('body').toggleClass('nav-open');
         });
+
+        // Set the credit value
+        $('#credit').html(credit())
     });
+
+    function credit(){
+
+        var date = new Date();
+        date.setTime(date.getTime() + (365*24*60*60*1000));
+        var expires = "; expires=" + date.toUTCString();
+
+        var value = parseInt(getCredit());
+        value = ++value || 1;
+        document.cookie = "credit=" + (value || 0)  + expires + "; path=/";
+        return value.toString().padStart(2, "0");
+    }
+
+    function getCredit() {
+        var nameEQ = "credit=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+
+
 
 </script>
 
