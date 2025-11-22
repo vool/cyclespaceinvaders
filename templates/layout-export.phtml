@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description"
+          content="<?= $v(isset($description) ? $description : 'Cycle Space has been INVADED ! Join in capturing these invaders #FreeTheCycleLanes.') ?>">
+    <meta name="author" content="Keith Phelan">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@CycleInvaders">
+    <meta name="twitter:creator" content="@TweetPhelan">
+    <meta name="twitter:title" content="<?= $v($title) ?> | Cycle Space Invaders">
+    <meta name="twitter:description"
+          content="<?= $v(isset($description) ? $description : 'Cycle Space has been INVADED ! Join in capturing these invaders, lets #FreeTheCycleLanes..') ?>">
+    <meta name="twitter:image" content="<?= $v(isset($card) ? $card : 'http://cyclespaceinvaders.com/img/card.png') ?>">
+
+    <title><?= $v($title) ?> | Cycle Space Invaders</title>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <!-- <link rel="stylesheet" href="/css/style.css" >
+    <link rel="stylesheet" href="/css/menu.css" > -->
+
+    <!-- Fontz -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <style></style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-19051681-6"></script>
+
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+            crossorigin="anonymous"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-19051681-6');
+        //TODO move to ENV
+    </script>
+
+</head>
+<body>
+
+<header class="head-main">
+    <?php //$v->insert('includes::nav') ?>
+</header>
+
+<main role="main" class="container">
+
+    <?php if (isset($hiscore)): ?>
+        HI-SCCORE
+        <br>
+        <?= $v($hiscore);
+    endif; ?>
+
+    <?= $v->section('content') ?>
+    <?php $v->insert('includes::footer') ?>
+</main>
+
+<!-- Core JavaScript libs -->
+<script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- <script id="twitter-wjs" type="text/javascript" async defer src="//platform.twitter.com/widgets.js"></script> -->
+
+
+<script>
+    window.twttr = (function (d, s, id) {
+        var t, js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        return window.twttr || (t = {
+            _e: [], ready: function (f) {
+                t._e.push(f)
+            }
+        });
+    }(document, "script", "twitter-wjs"));
+</script>
+<script>
+    twttr.ready(function (twttr) {
+
+
+        var tweets = $(".tweet");
+
+
+        jQuery(tweets).each(function (t, tweet) {
+
+            var id = jQuery(this).attr('id');
+
+            twttr.widgets.createTweet(
+                id, tweet,
+                {
+                    conversation: 'none',    // or all
+                    //cards        : 'hidden',  // or visible
+                    //linkColor    : '#cc0000', // default is blue
+                    theme: 'light'    // or dark
+                });
+
+        });
+
+        window.print()
+
+    });
+</script>
+
+
+<?= $v->section('scripts') ?>
+
+
+</body>
+</html>

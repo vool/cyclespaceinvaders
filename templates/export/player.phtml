@@ -1,0 +1,82 @@
+<?php $v->layout('layout-export') ?>
+
+<div class="container">
+
+    <div class="row mt-5">
+        <div class="col-lg-3">
+
+            <div class="my-4 text-right">
+
+                <h1 class="purple"><?= $v($total) ?></h1>
+                <h4>Invaders Captured</h4>
+                <br>
+
+                <h3 class="yellow"><?= $v(Carbon\Carbon::parse($user['created_at'])->format('d/m/y')) ?></h3>
+                <h6>JOINED</h6>
+                <br>
+                <h3 class="light-blue"><?= $v(Carbon\Carbon::parse($last_active)->format('d/m/y')) ?></h3>
+                <h6>LAST ACTIVE</h6>
+                <br>
+
+            </div>
+        </div>
+
+        <div class="col-lg-9 text-left">
+
+            <img src="<?= $v(largeAvatar($user["avatar"])) ?>" alt="" class="mx-auto img-fluid avatar">
+            <h2 class=" my-2 yellow"><?= $v($user['screenname']) ?></h2>
+            <h1 class=" red display-4">@<?= $v($user['username']) ?></h1>
+
+            <?php
+            if ($user["location"]) {
+                ?>
+                <span class="badge badge-info tags mb-2"><?= $v($user["location"]) ?></span>
+                <?php
+            } ?>
+
+            <p class="description">
+                <?= $v($user['description']) ?>
+            </p>
+
+            <?php $url = 'https://cyclespaceinvaders.com/player/@' . $user['username'];// "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";?>
+
+            <div>
+                <?= $v(t_follow($user["id"])) ?>
+                <span class="red">|</span>
+                <a href="https://twitter.com/intent/tweet?text=<?= $v($user['screenname']) ?> is helping to Free The Cycle Lanes&url=<?= $v($url) ?>&hashtags=FreeTheCycleLanes,CycleSpaceInvaders&via=CycleInvaders&=related=TweetPhelan"
+                   target="_BLANK">SHARE</a>
+                <?php if ($user['url']): ?>
+                    <span class="red">|</span>
+                    <a href="<?= $v($user["url"]) ?>" target="_BLANK">WEBSITE</a>
+                <?php endif; ?>
+                <span class="red">|</span>
+                <?= $v(t_link_user($user["username"])) ?>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <div class="col-12">
+
+            <?php
+            foreach ($tweets as $tweet) {
+
+                echo '<div class="tweet" id="' . $v($tweet['id']) . '"></div>';
+
+            }
+            ?>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<?php $v->push('scripts') ?>
+
+<?php $v->end() ?>

@@ -1,0 +1,60 @@
+<?php $v->layout('layout', ['title' => 'Tag Cloud']) ?>
+
+
+<h1>tag Cloud</h1>
+
+<div id="canvas" style="width:100%; height:500px">
+    ?
+</div>
+
+<?php $v->push('scripts') ?>
+
+<script src="node_modules/wordcloud/src/wordcloud2.js"></script>
+<script>
+
+
+    const tagArray = <?php echo json_encode($tags, true); ?>
+
+        console.dir(tagArray);
+    //
+    // const ttagArray = [['tralee', 120],['ttfoo', 102],['tfoto', 62],['foo', 82], ['bar', 6]];
+
+    // console.dir(ttagArray);
+    const tagCanvas = document.querySelector("#canvas"); // select your element to draw in
+    WordCloud(tagCanvas, {
+        list: tagArray,
+        classes: "tag-cloud-item", // add a class to each tag element so we can easily loop over it
+        //minSize: 60,
+        backgroundColor: 'transparent',
+
+        //fontFamily: 'Press Start 2P, cursive',
+
+        fontFamily: 'monospace',
+
+        //drawOutOfBound: true,
+
+        weightFactor: 0.5,
+
+        //gridSize: Math.round(16 * $('#canvas').width() / 1024),
+        // weightFactor: function (size) {
+        //     return size/4; //Math.pow(size, 2.3) * $('#canvas').width() / 1024;
+        // },
+        // fontFamily: 'Times, serif',
+        //  color: function (word, weight) {
+        //      return (weight === 12) ? '#f02222' : '#c09292';
+        //  },
+        rotateRatio: 0.5,
+        rotationSteps: 2,
+        color: 'random-light',
+        shrinkToFit: true,
+    });
+
+    tagCanvas.addEventListener('wordcloudstop', function (e) {
+        // loop over all added elements (by class name)
+        document.querySelectorAll('.tag-cloud-item').forEach(function (element) {
+            const text = element.innerHTML;
+            element.innerHTML = `<a href="/tag/${text}" style="color: inherit;">${text}</a>`;
+        });
+    });
+</script>
+<?php $v->end() ?>
